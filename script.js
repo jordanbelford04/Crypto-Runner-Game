@@ -73,7 +73,24 @@ function startGame() {
       obstacle.x -= 5;
     });
     obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
+    class Obstacle {
+  constructor(x, width) {
+    this.x = x;
+    this.y = canvas.height - 30; // Растягиваем до нижней линии экрана
+    this.width = width;
+    this.color = '#333';
   }
+
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.width, canvas.height - this.y); // Расширяем до нижней границы холста
+  }
+
+  update() {
+    this.x -= gameSpeed;
+    this.draw();
+  }
+
 
   function detectCollision() {
     for (let obstacle of obstacles) {
