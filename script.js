@@ -14,26 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
       characterOptions.forEach(opt => opt.classList.remove('selected'));
       option.classList.add('selected');
       selectedCharacter = option.getAttribute('data-character');
+    });
+  });
 
- document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') {
-    if (!jumping) {
-      velocity = -15; // Увеличение начальной скорости для сильного прыжка
-      jumping = true;
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      if (!jumping) {
+        velocity = -15; // Увеличение начальной скорости для сильного прыжка
+        jumping = true;
+      }
     }
-  }
- document.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') {
-    velocity = -15; // Начальная скорость прыжка
-    jumping = true;
-  }
-});
-
-document.addEventListener('keyup', (e) => {
-  if (e.code === 'Space') {
-    velocity = -10; // Уменьшаем скорость, чтобы дракон не касался земли
-  }
-});
+  });
 
   document.getElementById('start-button').addEventListener('click', () => {
     if (selectedCharacter) {
@@ -66,6 +57,8 @@ function startGame() {
   let obstacles = [];
   let frame = 0;
   let score = 0;
+  let jumping = false;
+  let velocity = -10;
 
   function drawPlayer() {
     ctx.drawImage(characters[selectedCharacter].image, player.x, player.y, player.width, player.height);
@@ -91,24 +84,7 @@ function startGame() {
       obstacle.x -= 5;
     });
     obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
-    class Obstacle {
-  constructor(x, width) {
-    this.x = x;
-    this.y = canvas.height - 30; // Растягиваем до нижней линии экрана
-    this.width = width;
-    this.color = '#333';
   }
-
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.x, this.y, this.width, canvas.height - this.y); // Расширяем до нижней границы холста
-  }
-
-  update() {
-    this.x -= gameSpeed;
-    this.draw();
-  }
-
 
   function detectCollision() {
     for (let obstacle of obstacles) {
@@ -148,6 +124,7 @@ function startGame() {
     if (player.y + player.height > canvas.height) {
       player.y = canvas.height - player.height;
       player.velocityY = 0;
+      jumping = false;
     }
 
     frame++;
@@ -157,6 +134,7 @@ function startGame() {
   document.addEventListener('keydown', event => {
     if (event.code === 'Space' && player.y + player.height === canvas.height) {
       player.velocityY = -20;
+      jumping = true;
     }
   });
 
