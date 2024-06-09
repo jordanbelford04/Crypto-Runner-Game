@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crypto Runner Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    #main-screen {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+    h1 {
+      font-size: 72px;
+      font-family: 'Arial Black', Gadget, sans-serif;
+      color: white;
+      text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
+    }
+    #coin-counter {
+      margin: 10px 0;
+      font-size: 24px;
+      color: white;
+    }
+    #top-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .top-button {
+      background-color: black;
+      color: white;
+      border: 1px solid white;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #character-select {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      border-radius: 10px;
+      background: none;
+    }
+    .character-option {
+      width: 100px;
+      height: 100px;
+      margin: 0 10px;
+      border: 5px solid transparent;
+      cursor: pointer;
+      position: relative;
+      text-align: center;
+    }
+    .character-option.selected {
+      border-color: #00ff00;
+      box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00;
+    }
+    .character-name {
+      color: white;
+      font-size: 14px;
+      position: absolute;
+      top: -25px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Press Start 2P', cursive;
+    }
+    .coin-counter {
+      color: white;
+      font-size: 14px;
+      position: absolute;
+      bottom: -25px;
+      width: 100%;
+      text-align: center;
+    }
+    .coin-img {
+      width: 14px;
+      height: 14px;
+      vertical-align: middle;
+    }
+    #start-button, #unlock-button {
+      margin: 20px;
+      padding: 10px 20px;
+      font-size: 24px;
+      cursor: pointer;
+      background-color: white;
+      border: 2px solid #00ff00;
+      color: black;
+      text-shadow: 0 0 5px #00ff00;
+    }
+    #leaderboard {
+      margin-top: 40px;
+      width: 50%;
+      color: white;
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    #leaderboard table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #leaderboard th, #leaderboard td {
+      border: 1px solid #00ff00;
+      padding: 5px;
+    }
+    .referral-container {
+      margin-top: 20px;
+      width: 50%;
+      color: white;
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .referral-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .referral-table th, .referral-table td {
+      border: 1px solid #00ff00;
+      padding: 5px;
+    }
+    .copy-button {
+      margin-top: 10px;
+      background-color: white;
+      color: black;
+      border: 2px solid #00ff00;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div id="main-screen">
+  <h1>Crypto Runner</h1>
+  <div id="coin-counter">У вас всего: 0 <img class="coin-img" src="assets/coin.png" alt="Монета"></div>
+  <div id="top-buttons">
+    <button class="top-button">Вывести монеты</button>
+    <button class="top-button">Скачать MetaMask</button>
+  </div>
+  <div id="character-select">
+    <div class="character-option" data-character="cyborg" style="background: url('assets/cyborg.png') no-repeat center; background-size: cover;">
+      <div class="character-name">Turbo Cyborg</div>
+      <div id="coin-counter-cyborg" class="coin-counter">0 <img class="coin-img" src="assets/coin.png" alt="Монета"></div>
+    </div>
+    <div class="character-option" data-character="cat" style="background: url('assets/cat.png') no-repeat center; background-size: cover;">
+      <div class="character-name">Arcane Knight</div>
+      <div id="coin-counter-cat" class="coin-counter">0 <img class="coin-img" src="assets/coin.png" alt="Монета"></div>
+    </div>
+    <div class="character-option" data-character="dragon" style="background: url('assets/dragon.png') no-repeat center; background-size: cover;">
+      <div class="character-name">Night Dragon</div>
+      <div id="coin-counter-dragon" class="coin-counter">0 <img class="coin-img" src="assets/coin.png" alt="Монета"></div>
+    </div>
+    <div class="character-option" data-character="new" style="background: url('assets/hero.png') no-repeat center; background-size: cover;">
+      <div class="character-name">Robin Good</div>
+      <div id="coin-counter-new" class="coin-counter">0 <img class="coin-img" src="assets/coin.png" alt="Монета"></div>
+    </div>
+  </div>
+  <div>
+    <button id="start-button">Начать игру</button>
+    <button id="unlock-button">Магазин</button>
+  </div>
+  <div id="leaderboard">
+    <h2>Таблица лидеров</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Юзернейм</th>
+          <th>Монеты</th>
+        </tr>
+      </thead>
+      <tbody id="leaderboard-body"></tbody>
+    </table>
+  </div>
+  <div class="referral-container">
+    <h2>Пригласите друзей в игру и получите вознаграждения!</h2>
+    <table class="referral-table">
+      <tbody>
+        <tr>
+          <td>Ваша реф. ссылка:</td>
+          <td id="referral-link">(реф ссылка)</td>
+          <td><button class="copy-button" onclick="copyReferralLink()">Копировать</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <canvas id="gameCanvas" width="800" height="400" style="display: none;"></canvas>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
