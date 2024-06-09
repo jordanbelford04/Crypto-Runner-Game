@@ -14,8 +14,26 @@ document.addEventListener('DOMContentLoaded', () => {
       characterOptions.forEach(opt => opt.classList.remove('selected'));
       option.classList.add('selected');
       selectedCharacter = option.getAttribute('data-character');
-    });
-  });
+
+ document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    if (!jumping) {
+      velocity = -15; // Увеличение начальной скорости для сильного прыжка
+      jumping = true;
+    }
+  }
+ document.addEventListener('keydown', (e) => {
+  if (e.code === 'Space') {
+    velocity = -15; // Начальная скорость прыжка
+    jumping = true;
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.code === 'Space') {
+    velocity = -10; // Уменьшаем скорость, чтобы дракон не касался земли
+  }
+});
 
   document.getElementById('start-button').addEventListener('click', () => {
     if (selectedCharacter) {
