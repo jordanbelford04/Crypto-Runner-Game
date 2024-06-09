@@ -63,6 +63,14 @@
       margin: 0 2px;
     }
   </style>
+  <script>
+  // Загрузка изображений при загрузке страницы
+  window.addEventListener('load', () => {
+    characters.cyborg.image.src = 'assets/cyborg.png';
+    characters.cat.image.src = 'assets/cat.png';
+    characters.dragon.image.src = 'assets/dragon.png';
+  });
+</script>
 </head>
 <body>
 <div id="main-screen">
